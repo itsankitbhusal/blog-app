@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 import "dotenv/config";
 import cors from "cors";
 import Auth from "./routes/authRoute.js";
@@ -6,6 +7,8 @@ import Category from "./routes/categoryRoute.js";
 import Post from "./routes/postRoute.js";
 import Comment from "./routes/commentRoute.js";
 import dbConnection from "./models/index.js";
+
+import * as googleStrategy from "./strategies/googleStrategy.js";
 
 const app = express();
 
@@ -15,6 +18,8 @@ app.use(express.json()); // ✅
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
+
+app.use(passport.initialize());
 
 app.get("/", (req, res) => {
   res.send("Root Route");
@@ -31,7 +36,6 @@ app.use("/post", Post);
 
 // comment route
 app.use("/comment", Comment);
-
 
 app.listen(process.env.PORT || 8000, async () => {
   console.log("\nServer Started 🚀");
