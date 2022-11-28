@@ -114,7 +114,7 @@ Response
 ## Google Auth
 ### `Auth/google`
 
-hit in `auth/google` endpoint and it will create user in databse with google cardinals but ==password field will be null== in the database. After  successful login we will have response as below
+hit in `auth/google` endpoint and it will create user in databse with google cardinals but <mark>password field will be null</mark> in the database. After  successful login we will have response as below
 
 `http://localhost:8000/auth/google`
 
