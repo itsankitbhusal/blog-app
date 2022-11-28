@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 import "dotenv/config";
 import cors from "cors";
 import Auth from "./routes/authRoute.js";
@@ -10,6 +11,8 @@ import passport from "passport";
 import bodyParser from "body-parser";
 import * as strategy from "./strategies/googleStrategy.js";
 
+import * as googleStrategy from "./strategies/googleStrategy.js";
+
 const app = express();
 
 // need to use this to parse the body of the request
@@ -20,6 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 // app.use(bodyParser.urlencoded({ extended: false }))
 // app.use(bodyParser.json());
+
+app.use(passport.initialize());
 
 app.use(passport.initialize());
 
@@ -38,7 +43,6 @@ app.use("/post", Post);
 
 // comment route
 app.use("/comment", Comment);
-
 
 app.listen(process.env.PORT || 8000, async () => {
   console.log("\nServer Started 🚀");

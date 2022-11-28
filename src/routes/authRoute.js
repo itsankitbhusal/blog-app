@@ -1,5 +1,5 @@
 import { response, Router } from "express";
-import passport from "passport"
+import passport from "passport";
 
 import AuthController from "../controllers/authController.js";
 import validateToken from "../middlewares/validateToken.js";
@@ -7,16 +7,15 @@ import validateToken from "../middlewares/validateToken.js";
 const router = Router();
 const authController = new AuthController();
 
-
-
 // auth/
 router.get("/", (req, res) => {
-    // res.json("Auth Router!");
-    res.send("<a href='/auth/google'>Login with Google</a>");
+  // res.json("Auth Router!");
+  res.send("<a href='/auth/google'>Login with Google</a>");
 });
 
 // auth/google route for google authentication from authController
 // use google login middleware from authController
+
 // router.get("/google", authController.googleLogin);
 
 router.get(
@@ -51,7 +50,5 @@ router.delete("/delete/:id", validateToken, authController.removeUser);
 
 // update user
 router.put("/update/:id", validateToken, authController.updateUser);
-
-
 
 export default router;
