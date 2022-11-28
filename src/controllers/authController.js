@@ -2,9 +2,6 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import "dotenv/config";
 
-import GoogleStrategy from "passport-google-oauth20";
-import passport from "passport";
-
 import users from "../models/userModel.js";
 
 
@@ -144,24 +141,4 @@ export default class AuthController {
 
 
     }
-    googleLogin(req, res, next) {
-        // google login
-        console.log("google login");
-        const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, } = process.env;
-
-        passport.use(new GoogleStrategy({
-            clientID: GOOGLE_CLIENT_ID,
-            clientSecret: GOOGLE_CLIENT_SECRET,
-            callbackURL: "http://localhost:8000/auth/google/callback"
-        },
-            function (accessToken, refreshToken, profile, cb) {
-                // users.findOrCreate({ id: profile.id, email: profile.email }, function (err, user) {
-                console.log("\n\n\nprofile: ", profile);
-                return cb(null, profile);
-                // });
-            }
-        ));
-        next();
-    }
-
 }

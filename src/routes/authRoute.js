@@ -15,39 +15,29 @@ router.get("/", (req, res) => {
 
 // auth/google route for google authentication from authController
 // use google login middleware from authController
-router.get(
-  "/google",
-  passport.authenticate("google", { session: false }),
-  (req, res) => {
-    res.status(200).json({
-      message: "Google Oauth",
-      statusCode: res.statusCode,
-    });
-  }
-);
 
-// auth/google
-// http://localhost:8000/auth/google/callback
+// router.get("/google", authController.googleLogin);
 
 router.get(
-  "/google/callback",
-  passport.authenticate("google", { session: false }),
-  (req, res) => {
-    res.status(200).json({
-      message: "Google Oauth Success",
-      statusCode: res.statusCode,
-      user: req.user,
-    });
-  }
+    "/google",
+    passport.authenticate("google", { session: false }),
+    (req, res) => {
+        res.status(200).json({
+            message: "Google Oauth",
+            statusCode: res.statusCode,
+        });
+    }
 );
 
-router.get("/success", (req, res) => {
-  res.send("Login Successful");
-});
-
-router.get("/failure", (req, res) => {
-  res.send("Login Failed");
-});
+router.get(
+    "/google/callback",
+    passport.authenticate("google", { session: false }),
+    (req, res) => {
+        res.status(200).json({
+            user: req.user
+        });
+    }
+);
 
 // auth/register
 router.post("/register", authController.addUser);
