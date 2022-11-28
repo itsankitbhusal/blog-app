@@ -23,7 +23,7 @@ const users = dbConnection.define("users", {
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false,
+        // allowNull: false,
     },
 },
     // timestamps

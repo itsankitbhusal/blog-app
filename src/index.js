@@ -6,6 +6,9 @@ import Category from "./routes/categoryRoute.js";
 import Post from "./routes/postRoute.js";
 import Comment from "./routes/commentRoute.js";
 import dbConnection from "./models/index.js";
+import passport from "passport";
+import bodyParser from "body-parser";
+import * as strategy from "./strategies/googleStrategy.js";
 
 const app = express();
 
@@ -15,6 +18,10 @@ app.use(express.json()); // ✅
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
+// app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.json());
+
+app.use(passport.initialize());
 
 app.get("/", (req, res) => {
   res.send("Root Route");
