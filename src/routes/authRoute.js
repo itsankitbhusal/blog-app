@@ -1,16 +1,17 @@
-import { response, Router } from "express";
+import { Router } from "express";
 import passport from "passport";
 
 import AuthController from "../controllers/authController.js";
 import validateToken from "../middlewares/validateToken.js";
+import * as googleStrategy from "../strategies/googleStrategy.js";
 
 const router = Router();
 const authController = new AuthController();
 
 // auth/
 router.get("/", (req, res) => {
-  // res.json("Auth Router!");
-  res.send("<a href='/auth/google'>Login with Google</a>");
+    // res.json("Auth Router!");
+    res.send("<a href='/auth/google'>Login with Google</a>");
 });
 
 // auth/google route for google authentication from authController
