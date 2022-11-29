@@ -20,6 +20,9 @@ router.delete("/delete/:id", categoryModel.removeCategory);
 // get category
 router.get("/get/:id", categoryModel.getCategory);
 
+// get all categories
+router.get("/get", categoryModel.getAllCategories);
+
 // update category
 router.put("/update/:id", categoryModel.updateCategory);
 

@@ -130,3 +130,147 @@ Response
 }
 ```
 
+
+---
+
+## Category Route `/category`
+---
+
+### Add category
+
+### `/category/add`
+
+#### POST
+
+`http://localhost:8000/category/add`
+
+Request
+
+```json
+{
+"name": "tech"
+}
+```
+
+Response
+
+```json
+{
+"message": "Category created successfully",
+"data": {
+	"id": 1,
+	"name": "tech",
+	"updatedAt": "2022-11-29T14:11:19.759Z",
+	"createdAt": "2022-11-29T14:11:19.759Z"
+	}
+}
+```
+
+
+### Delete Category
+
+### `/category/delete/:id`
+
+### DELETE
+
+Request
+
+`http://localhost:8000/category/delete/1`
+
+Response
+
+```json
+{
+"message": "Category deleted successfully",
+"data": 1
+}
+```
+
+### Get single category
+
+### `/category/get/:id`
+
+### GET
+
+`http://localhost:8000/category/get/2`
+
+Response
+
+```json
+{
+"message": "Category found successfully",
+	"data": {
+	"id": 2,
+	"name": "tech",
+	"createdAt": "2022-11-29T14:16:50.000Z",
+	"updatedAt": "2022-11-29T14:16:50.000Z"
+	}
+}
+```
+
+
+### Get all categories
+
+### `/category/get`
+
+### GET
+
+`http://localhost:8000/category/get/`
+
+Response
+
+```json
+{
+"message": "Categories found successfully",
+"data": [
+	{
+		"id": 2,
+		"name": "tech",
+		"createdAt": "2022-11-29T14:16:50.000Z",
+		"updatedAt": "2022-11-29T14:16:50.000Z"
+	},
+	{
+		"id": 3,
+		"name": "stack",
+		"createdAt": "2022-11-29T14:16:57.000Z",
+		"updatedAt": "2022-11-29T14:16:57.000Z"
+	},
+	{
+		"id": 4,
+		"name": "programming",
+		"createdAt": "2022-11-29T14:17:07.000Z",
+		"updatedAt": "2022-11-29T14:17:07.000Z"
+	}
+]
+}
+```
+
+
+### Update Category
+
+### `/category/update/:id`
+
+### PUT
+
+`http://localhost:8000/category/update/2`
+
+Request
+
+```json
+{
+"name": "updated"
+}
+```
+
+Response
+
+```json
+{
+"message": "Category updated successfully",
+"data": [
+		1
+	]
+
+}
+```
+
