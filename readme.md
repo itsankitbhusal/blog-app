@@ -522,7 +522,8 @@ Request
 "userId": 4,
 "postId": 2,
 "content": "this is updated content"
-}```
+}
+```
 
 Response
 
