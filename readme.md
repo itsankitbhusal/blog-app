@@ -503,7 +503,8 @@ Response
 {
 "message": "Comment deleted successfully",
 "data": 1
-}```
+}
+```
 
 
 ### Update Comment
