@@ -273,4 +273,176 @@ Response
 
 }
 ```
+---
+
+## Post Route `/category`
+
+---
+
+### Add Post
+
+### `/post/add`
+
+#### POST
+
+`http://localhost:8000/post/add`
+
+In this image isnot used, will be using in a while, now it is left as a empty
+
+Request
+
+```json
+{
+"title":"Title 1",
+"body":"body content goes here in an textfield",
+"categoryId":"3",
+"image": "https://i.picsum.photos/id/376/536/354.jpg?hmac=FY3pGZTc81LYCnJOB0PiRX570QylTn7xchj6FZA6TeQ",
+"userId":"4"
+}
+```
+
+Response
+
+```json
+{
+"message": "Post created successfully",
+"data": {
+	"id": 1,
+	"title": "Title 1",
+	"body": "body content goes here in an textfield",
+	"categoryId": "3",
+	"image": "https://i.picsum.photos/id/376/536/354.jpg?hmac=FY3pGZTc81LYCnJOB0PiRX570QylTn7xchj6FZA6TeQ",
+	"userId": "4",
+	"updatedAt": "2022-11-30T15:18:35.308Z",
+	"createdAt": "2022-11-30T15:18:35.308Z"
+	}
+
+}
+```
+
+### Delete Post 
+
+### `/post/delete/:id`
+
+### DELETE
+
+Request
+
+`http://localhost:8000/post/delete/1`
+
+Response
+
+```json
+{
+"message": "Post deleted successfully",
+"data": 1
+}
+```
+
+
+### Get all posts
+
+### `/post/get`
+
+### GET
+
+`http://localhost:8000/post/get/`
+
+Response
+
+```json
+{
+"message": "Posts found successfully",
+"data": [
+{
+"id": 2,
+"title": "Title 1",
+"body": "body content goes here in an textfield",
+"image": "https://i.picsum.photos/id/376/536/354.jpg?hmac=FY3pGZTc81LYCnJOB0PiRX570QylTn7xchj6FZA6TeQ",
+"categoryId": 3,
+"userId": 4,
+"createdAt": "2022-11-30T15:20:08.000Z",
+"updatedAt": "2022-11-30T15:20:08.000Z"
+},
+{
+"id": 5,
+"title": "Title 1",
+"body": "body content goes here in an textfield",
+"image": "https://i.picsum.photos/id/376/536/354.jpg?hmac=FY3pGZTc81LYCnJOB0PiRX570QylTn7xchj6FZA6TeQ",
+"categoryId": 3,
+"userId": 4,
+"createdAt": "2022-11-30T15:20:13.000Z",
+"updatedAt": "2022-11-30T15:20:13.000Z"
+},
+{
+"id": 6,
+"title": "Title 1",
+"body": "body content goes here in an textfield",
+"image": "https://i.picsum.photos/id/376/536/354.jpg?hmac=FY3pGZTc81LYCnJOB0PiRX570QylTn7xchj6FZA6TeQ",
+"categoryId": 3,
+"userId": 4,
+"createdAt": "2022-11-30T15:20:14.000Z",
+"updatedAt": "2022-11-30T15:20:14.000Z"
+}
+]
+}
+```
+
+
+### Get post by id
+
+### `/post/get/:id`
+
+### GET
+
+`http://localhost:8000/post/get/5`
+
+Response
+
+```json
+{
+"message": "Post found successfully",
+"data": {
+"id": 5,
+"title": "Title 1",
+"body": "body content goes here in an textfield",
+"image": "https://i.picsum.photos/id/376/536/354.jpg?hmac=FY3pGZTc81LYCnJOB0PiRX570QylTn7xchj6FZA6TeQ",
+"categoryId": 3,
+"userId": 4,
+"createdAt": "2022-11-30T15:20:13.000Z",
+"updatedAt": "2022-11-30T15:20:13.000Z"
+}
+}
+```
+
+
+### Update Post
+
+### `/post/update/:id`
+
+### PUT
+
+`http://localhost:8000/post/update/5`
+
+Request
+
+```json
+{
+"title":"Title updated",
+"body":"updated body content goes here in an textfield",
+"categoryId":"3",
+"userId":"4"
+}
+```
+
+Response
+
+```json
+{
+"message": "Post updated successfully",
+"data": [
+1
+]
+}
+```
 

@@ -4,6 +4,10 @@ export default class PostController {
 
     // add post
     async addPost(req, res) {
+        // check if title, body, categoryId, userId is provided
+        if (!req.body.title || !req.body.body || !req.body.categoryId || !req.body.userId) {
+            return res.status(400).json({ message: "Please provide title, body, image, categoryId, userId" });
+        }
         try {
             const response = await posts.create({ ...req.body });
             // check if post created
@@ -30,6 +34,22 @@ export default class PostController {
         }
     }
 
+    // get all posts
+    async getAllPosts(req, res) {
+        try {
+
+            const response = await posts.findAll();
+            // check if posts found
+            response ? res.status(200).json({
+                message: "Posts found successfully", data: response
+            }) : res.status(400).json({ message: "Posts not found" });
+
+
+        } catch (error) {
+            console.log("Error getting all posts: ", error);
+        }
+    }
+
     // get post
     async getPost(req, res) {
         try {
@@ -46,6 +66,10 @@ export default class PostController {
 
     // update post
     async updatePost(req, res) {
+        // check if title, body, categoryId, userId is provided
+        if (!req.body.title || !req.body.body || !req.body.categoryId || !req.body.userId) {
+            return res.status(400).json({ message: "Please provide title, body, image, categoryId, userId" });
+        }
         try {
             const response = await posts.update({ ...req.body }, { where: { id: req.params.id } });
             // check if post updated

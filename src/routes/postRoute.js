@@ -15,6 +15,9 @@ router.post("/add", postController.addPost);
 // delete post
 router.delete("/delete/:id", postController.removePost);
 
+// get all posts
+router.get("/get", postController.getAllPosts);
+
 // get post
 router.get("/get/:id", postController.getPost);
 
