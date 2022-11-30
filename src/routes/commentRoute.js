@@ -15,9 +15,6 @@ router.post("/add", commentController.addComment);
 // delete comment
 router.delete("/delete/:id", commentController.removeComment);
 
-// get comment
-router.get("/get/:id", commentController.getComment);
-
 // update comment
 router.put("/update/:id", commentController.updateComment);
 

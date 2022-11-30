@@ -3,6 +3,10 @@ import comments from '../models/commentModel.js';
 export default class CommentController {
     // add comment
     async addComment(req, res) {
+        // check if userId, postId, and content is provided
+        if (!req.body.userId || !req.body.postId || !req.body.content) {
+            return res.status(400).json({ message: "Please provide userId, postId, and comment" });
+        }
         try {
             const response = await comments.create({ ...req.body });
             // check if comment created
@@ -31,21 +35,12 @@ export default class CommentController {
         }
     }
 
-    // get comment
-    async getComment(req, res) {
-        try {
-            const response = await comments.findOne({ where: { id: req.params.id } });
-            // check if comment found
-            response ? res.status(200).json({
-                message: "Comment found successfully", data: response
-            }) : res.status(400).json({ message: "Comment not found" });
-        } catch (error) {
-            console.log("Error getting comment: ", error);
-        }
-    }
-
     // update comment
     async updateComment(req, res) {
+        // check if userId, postId, and content is provided
+        if (!req.body.userId || !req.body.postId || !req.body.content) {
+            return res.status(400).json({ message: "Please provide userId, postId, and comment" });
+        }
         try {
             const response = await comments.update
                 ({ ...req.body }, { where: { id: req.params.id } });

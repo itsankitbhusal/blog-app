@@ -446,3 +446,92 @@ Response
 }
 ```
 
+
+---
+
+## Comment Route `/comment`
+
+---
+
+### Add Comment
+
+### `/comment/add`
+
+#### POST
+
+`http://localhost:8000/comment/add`
+
+Request
+
+```json
+{
+"content": "this is a content of comment",
+"userId": "4",
+"postId": "2"
+}
+```
+
+Response
+
+```json
+{
+"message": "Comment created successfully",
+"data": {
+"id": 3,
+"content": "this is a content of comment",
+"userId": "4",
+"postId": "2",
+"updatedAt": "2022-11-30T15:50:42.104Z",
+"createdAt": "2022-11-30T15:50:42.104Z"
+}
+}
+```
+
+### Delete Comment
+
+### `/comment/delete/:id`
+
+### DELETE
+
+Request
+
+`http://localhost:8000/comment/delete/3`
+
+Response
+
+```json
+{
+"message": "Comment deleted successfully",
+"data": 1
+}```
+
+
+### Update Comment
+
+### `/comment/update/:id`
+
+### PUT
+
+`http://localhost:8000/comment/update/5`
+
+Request
+
+```json
+{
+"userId": 4,
+"postId": 2,
+"content": "this is updated content"
+}```
+
+Response
+
+```json
+{
+"message": "Comment updated successfully",
+"data": [
+1
+]
+}
+```
+
+
