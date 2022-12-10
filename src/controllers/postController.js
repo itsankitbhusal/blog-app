@@ -1,5 +1,6 @@
 import posts from '../models/postModel.js';
-
+import category from "../models/categoryModel.js"
+import user from "../models/userModel.js"
 export default class PostController {
 
     // add post
@@ -56,8 +57,23 @@ export default class PostController {
             if (l) {
                 const response = await posts.findAll(
                     {
-                        limit: l
-                    }
+                        attributes: { exclude: ['userId', 'categoryId', 'updatedAt'] },
+                        include: [{
+                            model: category,
+                            required: true,
+                            attributes: { exclude: ['createdAt', 'updatedAt'] }
+                        },
+                        {
+                            model: user,
+                            required: true,
+                            attributes: { exclude: ['createdAt', 'updatedAt', 'password', 'email'] }
+                        }
+
+                        ],
+
+                        limit: l,
+                    },
+
                 );
                 response ? res.status(200).json({
                     message: "Posts found successfully", data: response
