@@ -1,4 +1,5 @@
 import React from "react";
+import GetBlogs from "./GetBlogs";
 
 const LatestBlogs = () => {
   return (
@@ -9,6 +10,7 @@ const LatestBlogs = () => {
           Lorem ipsum dolor sit amet consectetur elit, Fuga sint quia atque
           fugiat dolores
         </p>
+        <GetBlogs />
       </div>
     </>
   );
