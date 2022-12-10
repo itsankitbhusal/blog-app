@@ -387,6 +387,43 @@ Response
 ]
 }
 ```
+### Get posts with limit
+
+### `/post/get/limit/:limit`
+
+### GET
+
+`http://localhost:8000/post/get/limit/2`
+
+Response
+
+```json
+{
+"message": "Posts found successfully",
+"data": [
+{
+"id": 2,
+"title": "Title 1",
+"body": "body content goes here in an textfield",
+"image": "https://i.picsum.photos/id/376/536/354.jpg?hmac=FY3pGZTc81LYCnJOB0PiRX570QylTn7xchj6FZA6TeQ",
+"categoryId": 3,
+"userId": 4,
+"createdAt": "2022-11-30T15:20:08.000Z",
+"updatedAt": "2022-11-30T15:20:08.000Z"
+},
+{
+"id": 5,
+"title": "Title updated",
+"body": "updated body content goes here in an textfield",
+"image": "https://i.picsum.photos/id/376/536/354.jpg?hmac=FY3pGZTc81LYCnJOB0PiRX570QylTn7xchj6FZA6TeQ",
+"categoryId": 3,
+"userId": 4,
+"createdAt": "2022-11-30T15:20:13.000Z",
+"updatedAt": "2022-11-30T15:33:20.000Z"
+}
+]
+}
+```
 
 
 ### Get post by id

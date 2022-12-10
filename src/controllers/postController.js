@@ -52,7 +52,6 @@ export default class PostController {
             const { limit } = req.params;
 
             const l = Number(limit);
-            console.log("\n\n\nlimit \n\n\n", limit);
             // get posts with limit
             if (l) {
                 const response = await posts.findAll(
