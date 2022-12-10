@@ -10,7 +10,7 @@ const Logo = () => {
           draggable={false}
           src={LogoSvg}
           alt="Blog Logo"
-          className=" w-[5vw]"
+          className=" w-[7vw]"
         />
       </Link>
     </>
