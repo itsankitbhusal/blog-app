@@ -37,16 +37,36 @@ export default class PostController {
     // get all posts
     async getAllPosts(req, res) {
         try {
-
-            const response = await posts.findAll();
             // check if posts found
+            const response = await posts.findAll();
             response ? res.status(200).json({
                 message: "Posts found successfully", data: response
             }) : res.status(400).json({ message: "Posts not found" });
 
-
         } catch (error) {
             console.log("Error getting all posts: ", error);
+        }
+    }
+    async getPostByLimit(req, res) {
+        try {
+            const { limit } = req.params;
+
+            const l = Number(limit);
+            console.log("\n\n\nlimit \n\n\n", limit);
+            // get posts with limit
+            if (l) {
+                const response = await posts.findAll(
+                    {
+                        limit: l
+                    }
+                );
+                response ? res.status(200).json({
+                    message: "Posts found successfully", data: response
+                }) : res.status(400).json({ message: "Posts not found" });
+            }
+
+        } catch (error) {
+            console.log("Error getting post:", error)
         }
     }
 

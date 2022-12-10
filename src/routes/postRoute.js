@@ -18,6 +18,9 @@ router.delete("/delete/:id", postController.removePost);
 // get all posts
 router.get("/get", postController.getAllPosts);
 
+router.get("/get/limit/:limit", postController.getPostByLimit);
+
+
 // get post
 router.get("/get/:id", postController.getPost);
 
