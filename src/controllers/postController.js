@@ -70,7 +70,8 @@ export default class PostController {
                         }
 
                         ],
-
+                        // get above data in descending order
+                        order: [['id', 'DESC']],
                         limit: l,
                     },
 
