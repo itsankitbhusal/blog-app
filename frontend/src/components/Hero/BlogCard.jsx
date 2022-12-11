@@ -2,26 +2,9 @@ import React from "react";
 
 import { AiOutlineUser } from "react-icons/ai";
 
-/* 
-  id
-  body
-  title
-  image
-  category
-    id
-    name
-  user
-  id
-   firstName
-   lastName
-
-
-
-*/
-
 const BlogCard = ({ blog }) => {
   return (
-    <div className="flex flex- gap-8 flex-wrap justify-center items-center h-[50vh] ">
+    <div className="flex flex- gap-8 flex-wrap justify-center items-center h-[50vh] text-start">
       {Array.isArray(blog)
         ? blog.map((post, index) => (
             <div
@@ -30,6 +13,7 @@ const BlogCard = ({ blog }) => {
             >
               <img
                 className="bg-center object-cover rounded-t-lg h-[30vh]"
+                draggable="false"
                 src={post.image}
                 alt={post.id}
               />
@@ -39,10 +23,14 @@ const BlogCard = ({ blog }) => {
                     {post.category.name}
                   </span>
                 </div>
-                <h1 className=" font-bold mt-2">{post.title}</h1>
+                <h1 className=" font-bold mt-2">
+                  {post.title.length > 30
+                    ? post.title.slice(0, 30) + "..."
+                    : post.title}
+                </h1>
                 {/* limit body to preview characters  */}
                 <p className=" text-brand-light">
-                  {post.body.slice(0, 200) + "..."}
+                  {post.body.slice(0, 60) + "..."}
                 </p>
                 <div className=" text-brand-primary text-sm">
                   <div className=" flex gap-2 items-center justify-between">
