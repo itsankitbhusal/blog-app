@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { FcGoogle } from "react-icons/fc";
 import logo from "../assets/images/logo.svg";
 import BASE_URL from "../constant/constant";
+import { LoginContext } from "./context/LoginContext";
 
-const Login = ({ isSignedIn, setIsSignedIn }) => {
+const Login = () => {
   const [userData, setUserData] = useState({});
+
+  const { setIsSignedIn, isSignedIn } = useContext(LoginContext);
 
   const Navigate = useNavigate();
 

@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { Link } from "react-router-dom";
+import { LoginContext } from "../context/LoginContext";
 
-const Auth = ({ isSignedIn, setIsSignedIn, loading }) => {
+const Auth = () => {
   const logOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("auth");
     setIsSignedIn(false);
   };
+
+  const { setIsSignedIn, loading, isSignedIn } = useContext(LoginContext);
 
   return (
     <>

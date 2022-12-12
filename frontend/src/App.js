@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import BASE_URL from './constant/constant';
 import { Route, Routes } from 'react-router-dom'
+import { LoginContext } from './components/context/LoginContext';
+
+
 
 import Home from './components/Home'
 import About from './components/About'
@@ -15,7 +18,15 @@ const App = () => {
 
 
   useEffect(() => {
-    verifyJwt(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
+
+    // check if token is present
+    if (!token) {
+      setIsSignedIn(false);
+      setLoading(false);
+      return;
+    }
+    verifyJwt(token);
   }, []);
 
   const verifyJwt = async (token) => {
@@ -40,17 +51,24 @@ const App = () => {
 
     console.log(data);
   };
+
   return (
 
     <>
       <div className="container w-full bg-gradient-to-r from-slate-200 via-cyan-50 to-slate-200 text-brand-dark">
-
-        <Navbar isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} loading={loading} />
+        <LoginContext.Provider value={{ loading, setLoading, isSignedIn, setIsSignedIn }}>
+          <Navbar />
+        </LoginContext.Provider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path='/about' element={<About />} />
-          <Route path='/login' element={<Login isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} />} />
+          {/* use context in Route path with login element */}
 
+          <Route path='/login' element={
+            <LoginContext.Provider value={{ isSignedIn, setIsSignedIn }}>
+              <Login />
+            </LoginContext.Provider>
+          } />
 
           <Route path='*' element={<h1>404 Not Found</h1>} />
         </Routes>
@@ -62,4 +80,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App;
