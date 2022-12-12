@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Auth from "./Auth";
 
-const Links = () => {
+const Links = ({ isSignedIn, setIsSignedIn, loading }) => {
   return (
     <>
       <div className="links font-bold ">
@@ -20,7 +20,11 @@ const Links = () => {
             <Link to="contact">Contact</Link>
           </li>
           <div className=" mx-8">
-            <Auth />
+            <Auth
+              setIsSignedIn={setIsSignedIn}
+              isSignedIn={isSignedIn}
+              loading={loading}
+            />
           </div>
         </ul>
       </div>
