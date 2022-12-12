@@ -141,4 +141,28 @@ export default class AuthController {
 
 
     }
+    async verifyJWT(req, res, next) {
+        // validate token
+        const token = req.headers["jwt-token"];
+        if (!token) {
+            return res.status(401).json({ message: "No token provided" });
+        }
+
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            req.tokenData = decoded;
+            if (decoded) {
+                res.status(200).json({ message: "Token verified", status: true });
+            } else {
+                res.status(400).json({ message: 'Token not found', status: false });
+            }
+            // pass control to next middleware
+            next();
+
+        } catch (error) {
+            console.log("Error verifying token: ", error);
+            return res.status(401).json({ status: false, message: "Unauthorized" });
+        }
+
+    }
 }

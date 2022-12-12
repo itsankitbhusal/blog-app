@@ -9,6 +9,15 @@ export default class PostController {
         if (!req.body.title || !req.body.body || !req.body.categoryId || !req.body.userId) {
             return res.status(400).json({ message: "Please provide title, body, image, categoryId, userId" });
         }
+        // user should be able to add more than one category to a post
+        // check if categoryId is an array
+        // if (Array.isArray(req.body.categoryId)) {
+        //     // check if categoryId array is empty
+        //     if (req.body.categoryId.length === 0) {
+        //         return res.status(400).json({ message: "Please provide categoryId" });
+        //     }
+        // }
+
         try {
             const response = await posts.create({ ...req.body });
             // check if post created

@@ -40,6 +40,9 @@ router.get(
     }
 );
 
+// auth/verifyJWT route for verifying the token
+router.post("/verifyJWT", authController.verifyJWT);
+
 // auth/register
 router.post("/register", authController.addUser);
 
