@@ -3,22 +3,18 @@ import passport from "passport";
 
 import AuthController from "../controllers/authController.js";
 import validateToken from "../middlewares/validateToken.js";
-import * as googleStrategy from "../strategies/googleStrategy.js";
+
+// for backend
+// import * as googleStrategy from "../strategies/googleStrategy.js";
 
 const router = Router();
 const authController = new AuthController();
 
-// auth/
-router.get("/", (req, res) => {
-    // res.json("Auth Router!");
-    res.send("<a href='/auth/google'>Login with Google</a>");
-});
 
-// auth/google route for google authentication from authController
-// use google login middleware from authController
+// google login
+router.post('/google', authController.googleLogin);
 
-// router.get("/google", authController.googleLogin);
-
+/* FOR BACKEND ONLY IMPLEMENTATION
 router.get(
     "/google",
     passport.authenticate("google", { session: false }),
@@ -39,7 +35,7 @@ router.get(
         });
     }
 );
-
+*/
 // auth/verifyJWT route for verifying the token
 router.post("/verifyJWT", authController.verifyJWT);
 

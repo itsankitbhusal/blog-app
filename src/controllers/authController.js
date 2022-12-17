@@ -165,4 +165,31 @@ export default class AuthController {
         }
 
     }
+    async googleLogin(req, res) {
+        // code
+        // console.log(req.body);
+        const { email, givenName, familyName } = req.body;
+        let token = "";
+
+        try {
+            // using find or create
+            const user = await users.findOrCreate({
+                where: { email },
+                defaults: {
+                    firstName: givenName,
+                    lastName: familyName
+                }
+            });
+
+
+            token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+            // if all goes as per expected
+            return res.status(200).json({ token, status: true });
+        } catch (error) {
+            console.log(error);
+            return res.status(200).json({ message: error, status: false });
+        }
+
+    }
 }
