@@ -1,11 +1,17 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import logo from "../assets/images/logo.svg";
 import BASE_URL from "../constant/constant";
 import { LoginContext } from "./context/LoginContext";
+import GoogleLogin from "react-google-login";
+import { gapi } from "gapi-script";
 
 const Login = () => {
+  gapi.load("client:auth2", () => {
+    gapi.auth2.init({
+      clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+    });
+  });
   const [userData, setUserData] = useState({});
 
   const { setIsSignedIn, isSignedIn } = useContext(LoginContext);
@@ -14,7 +20,6 @@ const Login = () => {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    // console.log(userData);
     const result = await submitLogin(userData);
     if (result) {
       setIsSignedIn(true);
@@ -27,6 +32,7 @@ const Login = () => {
     }
   };
 
+  // make post request to submit login cardinals
   const submitLogin = async (userData) => {
     const response = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
@@ -40,12 +46,46 @@ const Login = () => {
     return data;
   };
 
+  // for login inputs
   const handelChange = (e) => {
     const { name, value } = e.target;
     setUserData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
+  };
+
+  // google response
+  const responseGoogle = async (response) => {
+    const { email, givenName, familyName } = response.profileObj;
+
+    const userData = { email, givenName, familyName };
+    // send access token and profile info to backend
+    // console.log(email, givenName, familyName);
+    const result = await postGoogleData(userData);
+    // console.log(result);
+
+    if (result.status) {
+      setIsSignedIn(true);
+    }
+    localStorage.setItem("token", result.token);
+    localStorage.setItem("auth", true);
+
+    if (localStorage.getItem("token") && isSignedIn) {
+      Navigate("/");
+    }
+  };
+
+  // making post request for google verification on server
+  const postGoogleData = async (user) => {
+    const response = await fetch(`${BASE_URL}/auth/google`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    return await response.json();
   };
 
   return (
@@ -97,10 +137,14 @@ const Login = () => {
                     or
                   </span>
                 </div>
-                <button className="border font-medium px-4 py-3 rounded-md flex justify-center gap-2 items-center">
-                  <FcGoogle className=" text-2xl" />
-                  Login with Google
-                </button>
+
+                <GoogleLogin
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  buttonText="Login with Google"
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                  cookiePolicy="none"
+                />
               </div>
               <span className=" text-brand-primary text-sm hover:cursor-pointer">
                 <span className="  ">Don't have an account? </span>
