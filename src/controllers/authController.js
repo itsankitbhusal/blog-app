@@ -78,6 +78,10 @@ export default class AuthController {
         //    user login
         try {
             const user = await users.findOne({ where: { email: req.body.email } });
+
+            // grab id and email from user
+            const { id, email } = user.dataValues;
+
             if (!user) {
                 return res.status(400).json({ message: "User not found" });
             }
@@ -88,6 +92,10 @@ export default class AuthController {
                 return res.status(200).json({
                     message: "User logged in successfully",
                     token,
+                    userData: {
+                        id: id,
+                        email: email,
+                    }
                 });
             }
             if (!isMatch) {
@@ -166,10 +174,8 @@ export default class AuthController {
 
     }
     async googleLogin(req, res) {
-        // code
         // console.log(req.body);
         const { email, givenName, familyName } = req.body;
-        let token = "";
 
         try {
             // using find or create
@@ -180,12 +186,10 @@ export default class AuthController {
                     lastName: familyName
                 }
             });
-
-
-            token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
+            let token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
             // if all goes as per expected
-            return res.status(200).json({ token, status: true });
+            let userData = { id: user[0].dataValues.id, email: user[0].dataValues.email };
+            return res.status(200).json({ token, userData, status: true, });
         } catch (error) {
             console.log(error);
             return res.status(200).json({ message: error, status: false });
