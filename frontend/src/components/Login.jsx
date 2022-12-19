@@ -20,15 +20,18 @@ const Login = () => {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
+
     const result = await submitLogin(userData);
+    // console.log(result);
     if (result) {
       setIsSignedIn(true);
-    }
-    localStorage.setItem("token", result.token);
-    localStorage.setItem("auth", true);
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("auth", true);
+      localStorage.setItem("user", JSON.stringify(result.userData));
 
-    if (localStorage.getItem("token") && isSignedIn) {
-      Navigate("/");
+      if (localStorage.getItem("token") && isSignedIn) {
+        Navigate("/dashboard");
+      }
     }
   };
 
@@ -60,19 +63,24 @@ const Login = () => {
     const { email, givenName, familyName } = response.profileObj;
 
     const userData = { email, givenName, familyName };
+    // console.log(userData);
     // send access token and profile info to backend
     // console.log(email, givenName, familyName);
     const result = await postGoogleData(userData);
-    // console.log(result);
+    console.log(result);
 
-    if (result.status) {
-      setIsSignedIn(true);
+    if (result) {
+      if (result.status) {
+        setIsSignedIn(true);
+      }
+
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("auth", true);
+      localStorage.setItem("user", JSON.stringify(result.userData));
     }
-    localStorage.setItem("token", result.token);
-    localStorage.setItem("auth", true);
 
     if (localStorage.getItem("token") && isSignedIn) {
-      Navigate("/");
+      Navigate("/dashboard");
     }
   };
 
@@ -155,7 +163,7 @@ const Login = () => {
         </div>
       </>
     ) : (
-      Navigate("/")
+      Navigate("/dashboard")
     )
   );
 };

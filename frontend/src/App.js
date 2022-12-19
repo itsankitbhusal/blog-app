@@ -10,16 +10,16 @@ import About from './components/About'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Login from './components/Login'
+import Dashboard from "./components/Dashboard"
+import Posts from './components/Posts';
+import AddPost from './components/Posts/AddPost';
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
-
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     // check if token is present
     if (!token) {
       setIsSignedIn(false);
@@ -29,6 +29,7 @@ const App = () => {
     verifyJwt(token);
   }, []);
 
+  // function to verify token from server
   const verifyJwt = async (token) => {
     const response = await fetch(`${BASE_URL}/auth/verifyJWT`, {
       method: "POST",
@@ -69,6 +70,13 @@ const App = () => {
               <Login />
             </LoginContext.Provider>
           } />
+
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path="/dashboard/posts" element={<Posts />} />
+          <Route path="/dashboard/posts/add" element={<AddPost />} />
+
+
+
 
           <Route path='*' element={<h1>404 Not Found</h1>} />
         </Routes>

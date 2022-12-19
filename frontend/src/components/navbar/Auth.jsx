@@ -2,12 +2,17 @@ import React, { useContext } from "react";
 
 import { Link } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
+  const Navigate = useNavigate();
+
   const logOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("auth");
+    localStorage.removeItem("user");
     setIsSignedIn(false);
+    Navigate("/");
   };
 
   const { setIsSignedIn, loading, isSignedIn } = useContext(LoginContext);
