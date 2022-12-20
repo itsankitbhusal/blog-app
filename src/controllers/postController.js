@@ -109,6 +109,28 @@ export default class PostController {
         }
     }
 
+    // get post by user id and email
+    async getPostByUser(req, res) {
+        const id = Number(req.body.id);
+
+        if (!id) {
+            return res.status(400).json({ message: "Please provide id user" });
+        }
+        try {
+            const response = await posts.findAll({
+                where: {
+                    userId: id,
+                }
+            });
+            response ? res.status(200).json({
+                message: "Posts found successfully", data: response
+            }) : res.status(400).json({ message: "Posts not found" });
+
+        } catch (error) {
+            console.log("Error getting post: ", error);
+        }
+    }
+
     // update post
     async updatePost(req, res) {
         // check if title, body, categoryId, userId is provided
