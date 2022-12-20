@@ -120,7 +120,20 @@ export default class PostController {
             const response = await posts.findAll({
                 where: {
                     userId: id,
-                }
+                },
+                attributes: { exclude: ['userId', 'categoryId', 'updatedAt'] },
+                include: [{
+                    model: category,
+                    required: true,
+                    attributes: { exclude: ['createdAt', 'updatedAt'] }
+                },
+                {
+
+                    model: user,
+                    required: true,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'password', 'email'] }
+                }],
+
             });
             response ? res.status(200).json({
                 message: "Posts found successfully", data: response
