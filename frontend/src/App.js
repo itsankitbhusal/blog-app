@@ -71,11 +71,22 @@ const App = () => {
             </LoginContext.Provider>
           } />
 
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path="/dashboard/posts" element={<Posts />} />
-          <Route path="/dashboard/posts/add" element={<AddPost />} />
+          <Route path='/dashboard' element={
+            <LoginContext.Provider value={{ isSignedIn, setIsSignedIn }}>
+              <Dashboard />
+            </LoginContext.Provider>
+          } />
 
-
+          <Route path="/dashboard/posts" element={
+            <LoginContext.Provider value={{ isSignedIn, setIsSignedIn }}>
+              <Posts />
+            </LoginContext.Provider>
+          } />
+          <Route path="/dashboard/posts/add" element={
+            <LoginContext.Provider value={{ isSignedIn, setIsSignedIn }}>
+              <AddPost />
+            </LoginContext.Provider>
+          } />
 
 
           <Route path='*' element={<h1>404 Not Found</h1>} />

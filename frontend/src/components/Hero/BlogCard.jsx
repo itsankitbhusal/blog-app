@@ -1,15 +1,19 @@
-import React from "react";
-
+import React, { useContext } from "react";
 import { AiOutlineUser } from "react-icons/ai";
+import { LoginContext } from "../context/LoginContext";
+import { TbEdit } from "react-icons/tb";
+import { RiDeleteBin4Line } from "react-icons/ri";
 
 const BlogCard = ({ blog }) => {
+  const { isSignedIn } = useContext(LoginContext);
+
   return (
     <div className="flex flex- gap-8 flex-wrap justify-center items-center h-[50vh] text-start">
       {Array.isArray(blog)
         ? blog.map((post, index) => (
             <div
               key={index}
-              className="rounded-lg border w-[20vw] h-[50vh] flex flex-col hover:cursor-pointer"
+              className="rounded-lg border w-[20vw] h-[50vh] flex flex-col "
             >
               <img
                 className="bg-center object-cover rounded-t-lg h-[30vh]"
@@ -18,12 +22,24 @@ const BlogCard = ({ blog }) => {
                 alt={post.id}
               />
               <div className=" p-2 grid justify-between gap-2">
-                <div className="">
+                <div className=" flex justify-between items-center">
                   <span className=" bg-brand-light py-1 px-3 text-[.7rem] text-white  rounded-full">
                     {post.category.name}
                   </span>
+                  {/* create icons for  edit and delete */}
+                  {isSignedIn ? (
+                    <div className=" flex gap-2 text-brand-primary text-lg">
+                      <span className=" hover:cursor-pointer">
+                        <TbEdit />
+                      </span>
+                      <span className=" hover:cursor-pointer">
+                        <RiDeleteBin4Line />
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
-                <h1 className=" font-bold mt-2">
+
+                <h1 className=" font-bold mt-2 hover:cursor-pointer">
                   {post.title.length > 30
                     ? post.title.slice(0, 30) + "..."
                     : post.title}
