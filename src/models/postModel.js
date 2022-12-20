@@ -35,12 +35,14 @@ const posts = dbConnection.define("posts", {
 posts.belongsTo(dbConnection.models.users, {
     foreignKey: "userId",
     targetKey: "id",
+    onDelete: "CASCADE"
 });
 
 // make foreign key relationship with categories table for categoryId
 posts.belongsTo(dbConnection.models.categories, {
     foreignKey: "categoryId",
     targetKey: "id",
+    onDelete: "CASCADE"
 });
 
 export default posts;
