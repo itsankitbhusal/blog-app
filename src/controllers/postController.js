@@ -98,7 +98,19 @@ export default class PostController {
     // get post
     async getPost(req, res) {
         try {
-            const response = await posts.findOne({ where: { id: req.params.id } });
+            const response = await posts.findOne({
+                where: { id: req.params.id },
+                attributes: { exclude: ['userId', 'categoryId', 'updatedAt'] },
+                include: [{
+                    model: category,
+                    required: true,
+                    attributes: { exclude: ['createdAt', 'updatedAt'] }
+                }, {
+                    model: user,
+                    required: true,
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'password', 'email'] }
+                }]
+            });
             // check if post found
             response ? res.status(200).json({
                 message: "Post found successfully", data: response
