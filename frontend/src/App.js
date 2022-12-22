@@ -55,8 +55,8 @@ const App = () => {
 
   return (
 
-    <>
-      <div className="container w-full bg-gradient-to-r from-slate-200 via-cyan-50 to-slate-200 text-brand-dark">
+    <div className='bg-gradient-to-r from-slate-200 via-cyan-50 to-slate-200'>
+      <div className="w-full text-brand-dark">
         <LoginContext.Provider value={{ loading, setLoading, isSignedIn, setIsSignedIn }}>
           <Navbar />
         </LoginContext.Provider>
@@ -95,7 +95,7 @@ const App = () => {
 
       </div>
 
-    </>
+    </div>
   )
 }
 

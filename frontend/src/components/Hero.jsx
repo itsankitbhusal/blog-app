@@ -5,8 +5,8 @@ import LatestBlogs from "./Hero/LatestBlogs";
 const Hero = () => {
   return (
     <>
-      <div className="w-full h-[90vh] grid place-items-center px-[10vw] py-[3vh]">
-        <div className="heading text-center flex justify-center items-center flex-col m-4">
+      <div className="w-auto h-[90vh] grid place-items-center px-[10vw] py-[3vh]">
+        <div className="heading text-center flex justify-center items-center flex-col p-4 ">
           <h1 className=" text-8xl font-black">
             All summaries about tech blogs are here
           </h1>

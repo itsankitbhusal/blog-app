@@ -5,7 +5,7 @@ import Auth from "./Auth";
 const Links = () => {
   return (
     <>
-      <div className="links font-bold ">
+      <div className="links font-bold">
         <ul className=" flex gap-6 items-center ">
           <li>
             <Link to="/">Home</Link>

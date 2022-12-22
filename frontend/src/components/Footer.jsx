@@ -4,8 +4,8 @@ import { FaLocationArrow, FaPhoneAlt } from "react-icons/fa";
 const Footer = () => {
   return (
     <>
-      <div className=" mx-[10vw] py-[4vh] grid gap-4 ">
-        <div className=" flex justify-between">
+      <div className="w-full px-[10vw] py-[4vh] grid gap-4">
+        <div className=" flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold">Tech Blog</h1>
             <p className="text-gray-500">
