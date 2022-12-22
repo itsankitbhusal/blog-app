@@ -70,7 +70,7 @@ const BlogCard = ({ blog, setPostList }) => {
   };
 
   return (
-    <div className="flex flex- gap-8 flex-wrap justify-center items-center h-[50vh] text-start">
+    <div className="flex flex- gap-8 flex-wrap justify-center items-center h-auto text-start">
       {Array.isArray(blog)
         ? blog.map((post, index) => (
             <div
