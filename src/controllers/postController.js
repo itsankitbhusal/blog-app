@@ -105,10 +105,6 @@ export default class PostController {
                     model: category,
                     required: true,
                     attributes: { exclude: ['createdAt', 'updatedAt'] }
-                }, {
-                    model: user,
-                    required: true,
-                    attributes: { exclude: ['createdAt', 'updatedAt', 'password', 'email'] }
                 }]
             });
             // check if post found
