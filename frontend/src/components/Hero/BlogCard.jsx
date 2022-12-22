@@ -15,9 +15,9 @@ const BlogCard = ({ blog, setPostList }) => {
 
   // maintain form states
 
-  const [title, setTitle] = useState(singlePost.title);
-  const [content, setContent] = useState(singlePost.body);
-  const [imgUrl, setImgUrl] = useState(singlePost.image);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const [category, setCategory] = useState(null);
 
   const [postList] = usePostData("http://localhost:8000/category/get/");
@@ -61,12 +61,18 @@ const BlogCard = ({ blog, setPostList }) => {
   };
 
   const handelEdit = async (id) => {
-    console.log("Edit");
+    // console.log("Edit");
     setShowModel(true);
+
+    const data = await fetchEditData(id);
+    setSinglePost(data);
+    console.log(data);
+  };
+
+  const fetchEditData = async (id) => {
     const response = await fetch(`${BASE_URL}/post/get/${id}`);
     const data = await response.json();
-    console.log(data);
-    setSinglePost(data.data);
+    return data.data;
   };
 
   return (
@@ -75,7 +81,7 @@ const BlogCard = ({ blog, setPostList }) => {
         ? blog.map((post, index) => (
             <div
               key={index}
-              className="rounded-lg border w-[20vw] h-[50vh] flex flex-col "
+              className="rounded-lg border w-[20vw] h-[50vh] flex flex-col"
             >
               <img
                 className="bg-center object-cover rounded-t-lg h-[30vh]"
@@ -84,7 +90,7 @@ const BlogCard = ({ blog, setPostList }) => {
                 alt={post.id}
               />
               <div className=" p-2 grid justify-between gap-2">
-                <div className=" flex justify-between items-center">
+                <div className="flex justify-between w-[18vw]">
                   <span className=" bg-brand-light py-1 px-3 text-[.7rem] text-white  rounded-full">
                     {post.category.name}
                   </span>
@@ -145,9 +151,10 @@ const BlogCard = ({ blog, setPostList }) => {
                   <input
                     className=" p-2 border rounded-sm w-full ml-11"
                     type="text"
-                    value={title}
+                    value={title ? title : singlePost.title}
                     onChange={(e) => {
                       setTitle(e.target.value);
+                      // console.log(e.target.value);
                     }}
                   />
                 </div>
@@ -159,7 +166,7 @@ const BlogCard = ({ blog, setPostList }) => {
                   <input
                     className=" p-2 border rounded-sm w-full"
                     type="url"
-                    value={imgUrl}
+                    value={imgUrl ? imgUrl : singlePost.image}
                     onChange={(e) => setImgUrl(e.target.value)}
                   />
                 </div>
@@ -190,7 +197,7 @@ const BlogCard = ({ blog, setPostList }) => {
                   <textarea
                     className=" p-2 border rounded-sm w-full ml-4 h-[20vh]"
                     type="text"
-                    value={content}
+                    value={content ? content : singlePost.body}
                     onChange={(e) => setContent(e.target.value)}
                   ></textarea>
                 </div>

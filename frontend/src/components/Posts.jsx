@@ -5,7 +5,7 @@ import PostList from "./PostList";
 const Posts = () => {
   return (
     <>
-      <main className="w-full h-[90vh] shadow-2xl shadow-gray-300/50 mb-20 flex">
+      <main className="w-full h-auto shadow-2xl shadow-gray-300/50 mb-20 flex items-center">
         <Sidebar />
         <PostList />
       </main>
