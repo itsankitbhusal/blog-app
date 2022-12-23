@@ -155,11 +155,11 @@ export default class PostController {
     // update post
     async updatePost(req, res) {
         // check if title, body, categoryId, userId is provided
-        if (!req.body.title || !req.body.body || !req.body.categoryId || !req.body.userId) {
-            return res.status(400).json({ message: "Please provide title, body, image, categoryId, userId" });
+        if (!req.body.title || !req.body.body || !req.body.categoryId || !req.body.userId || !req.body.id) {
+            return res.status(400).json({ message: "Please provide title, body, image, categoryId, userId, postId" });
         }
         try {
-            const response = await posts.update({ ...req.body }, { where: { id: req.params.id } });
+            const response = await posts.update({ ...req.body }, { where: { id: req.body.id } });
             // check if post updated
             response ? res.status(200).json({
                 message: "Post updated successfully", data: response
