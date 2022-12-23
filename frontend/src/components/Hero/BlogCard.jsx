@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { LoginContext } from "../context/LoginContext";
 import { TbEdit } from "react-icons/tb";
@@ -18,7 +18,8 @@ const BlogCard = ({ blog, setPostList }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [imgUrl, setImgUrl] = useState("");
-  const [category, setCategory] = useState(null);
+  const [postCategory, setPostCategory] = useState("");
+  const [postId, setPostId] = useState("");
 
   const [postList] = usePostData("http://localhost:8000/category/get/");
 
@@ -61,12 +62,16 @@ const BlogCard = ({ blog, setPostList }) => {
   };
 
   const handelEdit = async (id) => {
-    // console.log("Edit");
+    setPostId(id);
     setShowModel(true);
-
+    // get data
     const data = await fetchEditData(id);
+
     setSinglePost(data);
-    console.log(data);
+    setContent(data.body);
+    setTitle(data.title);
+    setImgUrl(data.image);
+    setPostCategory(data.category.id);
   };
 
   const fetchEditData = async (id) => {
@@ -75,6 +80,35 @@ const BlogCard = ({ blog, setPostList }) => {
     return data.data;
   };
 
+  const handelFormSubmit = async (e) => {
+    e.preventDefault();
+    const id = JSON.parse(localStorage.getItem("user")).id;
+
+    // content
+    const submitData = {
+      title,
+      body: content,
+      image: imgUrl,
+      categoryId: postCategory,
+      userId: id,
+    };
+
+    console.log(submitData);
+    // update data
+    const data = await updateData(submitData, id);
+    console.log(data);
+  };
+  const updateData = async (content, id) => {
+    const response = await fetch(`${BASE_URL}/post/update/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...content, id: postId }),
+    });
+    const data = await response.json();
+    return data;
+  };
   return (
     <div className="flex flex- gap-8 flex-wrap justify-center items-center h-auto text-start">
       {Array.isArray(blog)
@@ -142,7 +176,10 @@ const BlogCard = ({ blog, setPostList }) => {
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-10 flex justify-center items-center transition-all ">
           <div className="bg-white w-[50vw] h-4/3 rounded-lg flex flex-col justify-center items-center relative">
             <h1 className="text-2xl font-bold pt-16">Edit Post</h1>
-            <form className=" grid place-items-center my-16">
+            <form
+              onSubmit={handelFormSubmit}
+              className=" grid place-items-center my-16"
+            >
               <div className=" grid place-items-center gap-4 w-[40vw]">
                 <div className=" flex gap-4 items-center justify-between w-full">
                   <label htmlFor="title" className=" font-semibold">
@@ -151,7 +188,7 @@ const BlogCard = ({ blog, setPostList }) => {
                   <input
                     className=" p-2 border rounded-sm w-full ml-11"
                     type="text"
-                    value={title ? title : singlePost.title}
+                    value={title}
                     onChange={(e) => {
                       setTitle(e.target.value);
                       // console.log(e.target.value);
@@ -166,7 +203,7 @@ const BlogCard = ({ blog, setPostList }) => {
                   <input
                     className=" p-2 border rounded-sm w-full"
                     type="url"
-                    value={imgUrl ? imgUrl : singlePost.image}
+                    value={imgUrl}
                     onChange={(e) => setImgUrl(e.target.value)}
                   />
                 </div>
@@ -176,16 +213,25 @@ const BlogCard = ({ blog, setPostList }) => {
                   </label>
                   <select
                     className=" p-2 ml-2 border rounded-sm w-full"
-                    name="category"
-                    id="category"
+                    value={postCategory}
                     onChange={(e) => {
                       // selected id
-                      const id = e.target.options[e.target.selectedIndex].id;
-                      setCategory(id);
+                      const id = Number(
+                        e.target.options[e.target.selectedIndex].value
+                      );
+
+                      setPostCategory(id);
+                      console.log("category id ", id);
                     }}
                   >
                     {postList.map((category) => (
-                      <option value={category.id}>{category.name}</option>
+                      <option
+                        key={category.id}
+                        value={category.id}
+                        selected={category.id === postCategory}
+                      >
+                        {category.name}
+                      </option>
                     ))}
                   </select>
                 </div>

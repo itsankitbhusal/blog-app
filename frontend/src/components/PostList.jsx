@@ -24,7 +24,7 @@ const PostList = () => {
       setPostList(data.data);
     };
     getPostList();
-  }, [user]);
+  }, []);
 
   // console.log(postList);
   return (
