@@ -13,6 +13,7 @@ import Login from './components/Login'
 import Dashboard from "./components/Dashboard"
 import Posts from './components/Posts';
 import AddPost from './components/Posts/AddPost';
+import Categories from './components/Categories';
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -87,6 +88,8 @@ const App = () => {
               <AddPost />
             </LoginContext.Provider>
           } />
+
+          <Route path="/dashboard/category" element={<Categories />} />
 
 
           <Route path='*' element={<h1>404 Not Found</h1>} />
