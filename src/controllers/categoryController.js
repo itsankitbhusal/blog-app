@@ -56,7 +56,7 @@ export default class CategoryController {
     // get all categories
     async getAllCategories(req, res) {
         try {
-            const response = await categoryModel.findAll();
+            const response = await categoryModel.findAll({ attributes: ["id", "name"] });
             // check if categories found
             response ? res.status(200).json({
                 message: "Categories found successfully", data: response
