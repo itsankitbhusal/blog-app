@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { LoginContext } from "../context/LoginContext";
 import { TbEdit } from "react-icons/tb";
@@ -21,9 +21,13 @@ const BlogCard = ({ blog, setPostList }) => {
   const [postCategory, setPostCategory] = useState("");
   const [postId, setPostId] = useState("");
 
+  const [updateError, setUpdateError] = useState("");
+
   const [postList] = usePostData("http://localhost:8000/category/get/");
 
+  console.log("post list", blog);
   const handelDelete = async (id) => {
+    // console.log("delete post with id: ", id);
     const deletePost = window.confirm(
       "Are you sure you want to delete this post?"
     );
@@ -31,14 +35,14 @@ const BlogCard = ({ blog, setPostList }) => {
     if (deletePost) {
       // delete post from server
       const data = await deletePostWithId(id);
+
       console.log(data);
-      // delete post from state
-      const updatedPost = blog.filter((post) => post.id !== data.data.post.id);
 
-      console.log(updatedPost);
-
-      // update state
-      setPostList(updatedPost);
+      if (data.data) {
+        // delete post from state
+        const newPostList = blog.filter((post) => post.id !== id);
+        setPostList(newPostList);
+      }
     }
   };
 
@@ -54,7 +58,6 @@ const BlogCard = ({ blog, setPostList }) => {
       });
 
       const data = await response.json();
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -97,6 +100,12 @@ const BlogCard = ({ blog, setPostList }) => {
     // update data
     const data = await updateData(submitData, id);
     console.log(data);
+    if (data.data) {
+      setShowModel(false);
+    } else {
+      console.log("error");
+      setUpdateError(data.message);
+    }
   };
   const updateData = async (content, id) => {
     const response = await fetch(`${BASE_URL}/post/update/${id}`, {
@@ -109,12 +118,19 @@ const BlogCard = ({ blog, setPostList }) => {
     const data = await response.json();
     return data;
   };
+
+  const handelBackgroundClick = () => {
+    setShowModel(false);
+  };
+  const handelModalClick = (e) => {
+    e.stopPropagation();
+  };
   return (
     <div className="flex flex- gap-8 flex-wrap justify-center items-center h-auto text-start">
       {Array.isArray(blog)
         ? blog.map((post, index) => (
             <div
-              key={index}
+              key={post.id}
               className="rounded-lg border w-[20vw] h-[50vh] flex flex-col"
             >
               <img
@@ -173,14 +189,20 @@ const BlogCard = ({ blog, setPostList }) => {
         : null}
       {/* show model */}
       {showModel ? (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-10 flex justify-center items-center transition-all ">
-          <div className="bg-white w-[50vw] h-4/3 rounded-lg flex flex-col justify-center items-center relative">
+        <div
+          onClick={handelBackgroundClick}
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-10 flex justify-center items-center transition-all "
+        >
+          <div
+            onClick={handelModalClick}
+            className="bg-white w-[50vw] h-4/3 rounded-lg flex flex-col justify-center items-center relative"
+          >
             <h1 className="text-2xl font-bold pt-16">Edit Post</h1>
             <form
               onSubmit={handelFormSubmit}
               className=" grid place-items-center my-16"
             >
-              <div className=" grid place-items-center gap-4 w-[40vw]">
+              <div className="grid place-items-center gap-4 w-[40vw]">
                 <div className=" flex gap-4 items-center justify-between w-full">
                   <label htmlFor="title" className=" font-semibold">
                     Title:
@@ -247,11 +269,21 @@ const BlogCard = ({ blog, setPostList }) => {
                     onChange={(e) => setContent(e.target.value)}
                   ></textarea>
                 </div>
-
+                <div className="flex gap-4 items-center w-full justify-center">
+                  {updateError ? (
+                    <p className="text-red-500 text-xs">{updateError}</p>
+                  ) : null}
+                </div>
                 <div className=" flex gap-4 items-center w-full justify-end">
+                  <p
+                    onClick={() => setShowModel(false)}
+                    className="text-red-500 border-red-400 border-2 rounded-sm py-2 px-7 font-semibold hover:cursor-pointer hover:bg-red-400 hover:text-white transition-all"
+                  >
+                    Cancel
+                  </p>
                   <button
                     value="submit"
-                    className="btn bg-brand-primary text-white rounded-sm py-3 px-7 font-semibold w-1/3"
+                    className="btn bg-brand-primary text-white border-2 border-brand-primary rounded-sm py-2 px-7 font-semibold"
                   >
                     Update
                   </button>
