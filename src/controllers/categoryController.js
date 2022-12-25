@@ -42,7 +42,7 @@ export default class CategoryController {
     // get category
     async getCategory(req, res) {
         try {
-            const response = await categoryModel.findOne({ where: { id: req.params.id } });
+            const response = await categoryModel.findOne({ where: { id: req.params.id }, attributes: ["id", "name"] });
             // check if category found
             response ? res.status(200).json({
                 message: "Category found successfully", data: response
