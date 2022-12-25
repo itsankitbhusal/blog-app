@@ -14,6 +14,7 @@ import Dashboard from "./components/Dashboard"
 import Posts from './components/Posts';
 import AddPost from './components/Posts/AddPost';
 import Categories from './components/Categories';
+import AddCategory from './components/category/AddCategory';
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -90,7 +91,7 @@ const App = () => {
           } />
 
           <Route path="/dashboard/category" element={<Categories />} />
-
+          <Route path='/dashboard/category/add' element={<AddCategory />} />
 
           <Route path='*' element={<h1>404 Not Found</h1>} />
         </Routes>
