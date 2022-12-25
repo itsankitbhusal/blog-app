@@ -1,13 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import { LoginContext } from "../context/LoginContext";
 import { TbEdit } from "react-icons/tb";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import BASE_URL from "../../constant/constant";
 import usePostData from "../usePostData";
-import { useState } from "react";
 
 const BlogCard = ({ blog, setPostList }) => {
+  const Navigate = useNavigate();
+
   const { isSignedIn } = useContext(LoginContext);
   const [showModel, setShowModel] = React.useState(false);
 
@@ -161,7 +163,13 @@ const BlogCard = ({ blog, setPostList }) => {
                   ) : null}
                 </div>
 
-                <h1 className=" font-bold mt-2 hover:cursor-pointer">
+                <h1
+                  className=" font-bold mt-2 hover:cursor-pointer"
+                  onClick={() => {
+                    // console.log("clicked id:", post.id);
+                    Navigate(`/post/${post.id}`);
+                  }}
+                >
                   {post.title.length > 30
                     ? post.title.slice(0, 30) + "..."
                     : post.title}

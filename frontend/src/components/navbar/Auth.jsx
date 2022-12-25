@@ -16,14 +16,9 @@ const Auth = () => {
   };
 
   const { setIsSignedIn, loading, isSignedIn } = useContext(LoginContext);
-
   return (
     <>
-      {loading ? (
-        <div className="  bg-brand-primary text-white px-6 py-1.5 rounded-sm">
-          User...
-        </div>
-      ) : (
+      {!loading ? (
         <div className="flex gap-4 ">
           {!isSignedIn ? (
             <Link
@@ -41,7 +36,7 @@ const Auth = () => {
             </Link>
           )}
         </div>
-      )}
+      ) : null}
     </>
   );
 };

@@ -49,16 +49,16 @@ const AddPost = () => {
       <main className="w-full h-[90vh] shadow-2xl shadow-gray-300/50 mb-20 flex">
         <Sidebar />
 
-        <div className=" grid place-items-center px-16">
+        <div className=" grid w-full p-16 overflow-y-auto mt-8">
           {/* form to add blog */}
           <form onSubmit={handelSubmit} ref={formRef}>
             <div className=" grid gap-4">
-              <div className=" flex gap-4 w-[50vw] justify-end items-center">
+              <div className=" flex gap-4 w-full justify-end items-center">
                 <label htmlFor="title" className=" w-1/6 font-semibold">
                   Title
                 </label>
                 <input
-                  className=" w-1/2 rounded-sm py-2 px-4"
+                  className=" w-full rounded-sm py-2 px-4"
                   type="text"
                   name="title"
                   id="title"
@@ -66,19 +66,19 @@ const AddPost = () => {
                 />
               </div>
 
-              <div className=" flex gap-4 w-[50vw]  justify-end items-center">
+              <div className=" flex gap-4 w-full  justify-end items-center">
                 <label htmlFor="image" className=" w-1/6 font-semibold">
                   Image URL
                 </label>
                 <input
-                  className=" w-1/2 rounded-sm py-2 px-4"
+                  className=" w-full rounded-sm py-2 px-4"
                   type="url"
                   name="image"
                   id="image"
                   onChange={(e) => setImgUrl(e.target.value)}
                 />
               </div>
-              <div className=" flex gap-4 w-[50vw]  justify-end items-center">
+              <div className=" flex gap-4 w-full justify-end items-center">
                 <label htmlFor="data" className=" w-1/6 font-semibold">
                   Category
                 </label>
@@ -86,7 +86,7 @@ const AddPost = () => {
                 <select
                   id="data"
                   name="category"
-                  className=" w-1/2 rounded-sm py-2 px-4 bg-white border-none border-brand-light text-brand-primary hover:cursor-pointer"
+                  className=" w-full rounded-sm py-2 px-4 bg-white border-none border-brand-light text-brand-primary hover:cursor-pointer"
                   onChange={(e) => {
                     // selected id
                     const id = e.target.options[e.target.selectedIndex].id;
@@ -108,19 +108,19 @@ const AddPost = () => {
                 </select>
               </div>
 
-              <div className="flex gap-4 w-[50vw] items-center justify-end">
+              <div className="flex gap-4 w-full items-center justify-end">
                 <label htmlFor="content" className=" w-1/6 font-semibold">
                   Content
                 </label>
                 <textarea
-                  className=" w-1/2 rounded-sm h-[30vh] py-2 px-4"
+                  className=" w-full rounded-sm h-[30vh] py-2 px-4"
                   name="content"
                   id="content"
                   onChange={(e) => setContent(e.target.value)}
                 ></textarea>
               </div>
 
-              <div className=" flex justify-end w-[50vw]">
+              <div className=" flex justify-end w-full">
                 <button
                   type="submit"
                   className=" bg-brand-primary text-white rounded-sm py-3 px-7 font-semibold"
