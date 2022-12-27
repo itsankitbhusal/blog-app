@@ -6,6 +6,8 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/slate": "^0.47.11",
+    "@uiw/react-md-editor": "^3.20.1",
     "dotenv": "^16.0.3",
     "dotenv-webpack": "^8.0.1",
     "gapi-script": "^1.2.0",

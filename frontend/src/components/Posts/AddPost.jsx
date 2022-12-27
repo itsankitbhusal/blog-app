@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useRef } from "react";
 import Sidebar from "../dashboard/Sidebar";
 import usePostData from "../usePostData";
+import PostRichText from "./PostRichText";
 
 const AddPost = () => {
   const [imgUrl, setImgUrl] = useState("");
@@ -28,7 +29,10 @@ const AddPost = () => {
     const response = await postData(data);
     // console.log(response);
     if (response) {
+      // reset form
       formRef.current.reset();
+      // reset content state
+      setContent("");
     }
   };
 
@@ -112,12 +116,16 @@ const AddPost = () => {
                 <label htmlFor="content" className=" w-1/6 font-semibold">
                   Content
                 </label>
-                <textarea
-                  className=" w-full rounded-sm h-[30vh] py-2 px-4"
+
+                {/* <textarea
+                  className="w-full rounded-sm h-[30vh] py-2 px-4"
                   name="content"
                   id="content"
                   onChange={(e) => setContent(e.target.value)}
-                ></textarea>
+                ></textarea> */}
+                <div className="w-full rounded-sm" name="content">
+                  <PostRichText setContent={setContent} content={content} />
+                </div>
               </div>
 
               <div className=" flex justify-end w-full">

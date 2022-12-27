@@ -1,6 +1,6 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
-import React from "react";
-import { useState, useEffect } from "react";
+import { marked } from "marked";
+
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import BASE_URL from "../constant/constant";
@@ -10,6 +10,11 @@ const PostContent = () => {
 
   const [error, setError] = useState(false);
   const [post, setPost] = useState({});
+  const [htmlString, setHtmlString] = useState("");
+
+  const parseMarkdown = (markdownContent) => {
+    return marked(markdownContent, { sanitize: true });
+  };
 
   useEffect(() => {
     fetchPostContent();
@@ -24,6 +29,7 @@ const PostContent = () => {
       setError(true);
     } else {
       setPost(data.data);
+      setHtmlString(parseMarkdown(data.data.body));
     }
   };
 
@@ -56,7 +62,12 @@ const PostContent = () => {
                 </div>
                 <div className="pb-16 pt-4 w-[90vw] text-justify">
                   <h1 className="text-3xl font-bold pb-4">{post?.title}</h1>
-                  <p className="text-gray-500">{post?.body}</p>
+                  {/* <p className="text-gray-500">{post?.body}</p> */}
+                  {post?.body ? (
+                    <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+                  ) : (
+                    <div>Post not found...</div>
+                  )}
                 </div>
               </div>
             </div>

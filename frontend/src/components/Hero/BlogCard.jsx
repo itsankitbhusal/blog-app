@@ -6,6 +6,7 @@ import { TbEdit } from "react-icons/tb";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import BASE_URL from "../../constant/constant";
 import usePostData from "../usePostData";
+import BlogBodyPreview from "./BlogBodyPreview";
 
 const BlogCard = ({ blog, setPostList }) => {
   const Navigate = useNavigate();
@@ -176,7 +177,7 @@ const BlogCard = ({ blog, setPostList }) => {
                 </h1>
                 {/* limit body to preview characters  */}
                 <p className=" text-brand-light">
-                  {post.body.slice(0, 60) + "..."}
+                  <BlogBodyPreview data={post.body} />
                 </p>
                 <div className=" text-brand-primary text-sm">
                   <div className=" flex gap-2 items-center justify-between">
