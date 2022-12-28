@@ -1,4 +1,5 @@
 import comments from '../models/commentModel.js';
+import User from '../models/userModel.js';
 
 export default class CommentController {
     // add comment
@@ -38,10 +39,12 @@ export default class CommentController {
     // update comment
     async updateComment(req, res) {
         // check if userId, postId, and content is provided
-        if (!req.body.userId || !req.body.postId || !req.body.content) {
-            return res.status(400).json({ message: "Please provide userId, postId, and comment" });
+        if (!req.body.content || !req.params.id) {
+            return res.status(400).json({ message: "Please provide commentId and comment" });
         }
         try {
+            console.log("req body", req.body)
+            console.log("param", req.params);
             const response = await comments.update
                 ({ ...req.body }, { where: { id: req.params.id } });
             // check if comment updated
@@ -50,6 +53,32 @@ export default class CommentController {
             }) : res.status(400).json({ message: "Comment not updated" });
         } catch (error) {
             console.log("Error updating comment: ", error);
+        }
+    }
+
+    // get all comments by post id
+    async getCommentsByPostId(req, res) {
+        // check if postId is provided
+        if (!req.params.id) {
+            return res.status(400).json({ message: "Please provide postId" });
+        }
+        try {
+            const response = await comments.findAll({
+                where: { postId: req.params.id },
+                attributes: { exclude: ['userId', 'postId'] },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['email']
+                    }
+                ]
+            });
+            // check if comments found
+            response ? res.status(200).json({
+                message: "Comments found successfully", data: response
+            }) : res.status(400).json({ message: "Comments not found" });
+        } catch (error) {
+            console.log("Error getting comments: ", error);
         }
     }
 }

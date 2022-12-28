@@ -18,4 +18,7 @@ router.delete("/delete/:id", commentController.removeComment);
 // update comment
 router.put("/update/:id", commentController.updateComment);
 
+// get all comments by post id
+router.get("/post/:id", commentController.getCommentsByPostId);
+
 export default router;
