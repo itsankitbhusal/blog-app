@@ -1,11 +1,14 @@
 import { marked } from "marked";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import BASE_URL from "../constant/constant";
+import LoadComments from "./comments/LoadComments";
 
 const PostContent = () => {
+  // using context api
+
   const { id } = useParams();
 
   const [error, setError] = useState(false);
@@ -72,7 +75,11 @@ const PostContent = () => {
               </div>
             </div>
           </div>
-          {/* ) : null} */}
+
+          {/* comment section */}
+          <div className=" w-[90vw]">
+            <LoadComments postId={id} />
+          </div>
         </div>
       ) : (
         <div>Post not found...</div>

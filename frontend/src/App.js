@@ -94,7 +94,11 @@ const App = () => {
           <Route path="/dashboard/category" element={<Categories />} />
           <Route path='/dashboard/category/add' element={<AddCategory />} />
 
-          <Route path="/post/:id" element={<PostContent />} />
+          <Route path="/post/:id" element={
+            <LoginContext.Provider value={{ isSignedIn, setIsSignedIn }}>
+              <PostContent />
+            </LoginContext.Provider>
+          } />
 
           <Route path='*' element={<h1>404 Not Found</h1>} />
         </Routes>
