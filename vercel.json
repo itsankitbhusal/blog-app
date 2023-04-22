@@ -8,9 +8,12 @@
     ],
     "routes": [
       {
+        "src": "/api/(.*)",
+        "dest": "src/index.js"
+      },
+      {
         "src": "/(.*)",
-        "dest": "/index.js"
+        "dest": "frontend/public/$1"
       }
     ]
   }
-  
