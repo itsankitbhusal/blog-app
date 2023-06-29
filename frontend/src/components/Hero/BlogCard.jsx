@@ -176,9 +176,9 @@ const BlogCard = ({ blog, setPostList }) => {
                     : post.title}
                 </h1>
                 {/* limit body to preview characters  */}
-                <p className=" text-brand-light">
+                <div className=" text-brand-light">
                   <BlogBodyPreview data={post.body} />
-                </p>
+                </div>
                 <div className=" text-brand-primary text-sm">
                   <div className=" flex gap-2 items-center justify-between">
                     <span className=" flex items-center">
