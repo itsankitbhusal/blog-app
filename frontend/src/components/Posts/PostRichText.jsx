@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import MDEditor from "@uiw/react-md-editor";
 
 const PostRichText = ({ setContent, content }) => {

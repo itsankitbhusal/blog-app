@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { marked } from "marked";
+import ReactMarkdown from "react-markdown";
 
 const BlogBodyPreview = ({ data }) => {
   const [htmlString, setHtmlString] = useState("");
-  const newData = data.replace(/[#*_`]/g, "");
-  const newContent = newData.slice(0, 30) + "...";
-  const parseMarkdown = (markdownContent) => {
-    return marked(markdownContent, { sanitize: true });
-  };
+  const newData = data?.replace(/[#*_`]/g, "");
+  const newContent = newData?.slice(0, 30) + "...";
   useEffect(() => {
-    setHtmlString(parseMarkdown(newContent));
+    setHtmlString(newContent);
     //   filter the markdown syntax from the string
   }, [data]);
 
   return (
     <div>
-      <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+      {/* <div dangerouslySetInnerHTML={{ __html: htmlString }} /> */}
+      <ReactMarkdown>{htmlString}</ReactMarkdown>
     </div>
   );
 };
