@@ -1,6 +1,6 @@
-import { marked } from "marked";
+import ReactMarkdown from 'react-markdown';
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import BASE_URL from "../constant/constant";
@@ -15,10 +15,6 @@ const PostContent = () => {
   const [post, setPost] = useState({});
   const [htmlString, setHtmlString] = useState("");
 
-  const parseMarkdown = (markdownContent) => {
-    return marked(markdownContent, { sanitize: true });
-  };
-
   useEffect(() => {
     fetchPostContent();
   }, [id]);
@@ -32,7 +28,7 @@ const PostContent = () => {
       setError(true);
     } else {
       setPost(data.data);
-      setHtmlString(parseMarkdown(data.data.body));
+      setHtmlString(data.data.body);
     }
   };
 
@@ -67,7 +63,7 @@ const PostContent = () => {
                   <h1 className="text-3xl font-bold pb-4">{post?.title}</h1>
                   {/* <p className="text-gray-500">{post?.body}</p> */}
                   {post?.body ? (
-                    <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+                  <ReactMarkdown>{htmlString}</ReactMarkdown>
                   ) : (
                     <div>Post not found...</div>
                   )}
