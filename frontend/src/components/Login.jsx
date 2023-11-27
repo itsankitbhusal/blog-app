@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 import BASE_URL from "../constant/constant";
 import { LoginContext } from "./context/LoginContext";
-import GoogleLogin from "react-google-login";
+// import GoogleLogin from "react-google-login"; // depreciated library one
+import { GoogleLogin } from "@react-oauth/google";
 import { gapi } from "gapi-script";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   gapi.load("client:auth2", () => {
@@ -60,12 +62,14 @@ const Login = () => {
 
   // google response
   const responseGoogle = async (response) => {
-    const { email, givenName, familyName } = response.profileObj;
+    console.log("response: ", response);
+    const { email, given_name: givenName, family_name: familyName } = response;
 
     const userData = { email, givenName, familyName };
-    // console.log(userData);
     // send access token and profile info to backend
-    // console.log(email, givenName, familyName);
+    if (!email || !givenName || !familyName) {
+      return;
+    }
     const result = await postGoogleData(userData);
     console.log(result);
 
@@ -145,13 +149,25 @@ const Login = () => {
                     or
                   </span>
                 </div>
-
-                <GoogleLogin
+                {/* <GoogleLogin
                   clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                   buttonText="Login with Google"
                   onSuccess={responseGoogle}
                   onFailure={responseGoogle}
                   cookiePolicy="none"
+                /> */}
+                {/* updated code */}
+                <GoogleLogin
+                  onSuccess={(credentialResponse) => {
+                    console.log(credentialResponse);
+                    const decodedData = jwtDecode(
+                      credentialResponse.credential
+                    );
+                    responseGoogle(decodedData);
+                  }}
+                  onError={() => {
+                    console.log("Login Failed");
+                  }}
                 />
               </div>
               <span className=" text-brand-primary text-sm hover:cursor-pointer">
